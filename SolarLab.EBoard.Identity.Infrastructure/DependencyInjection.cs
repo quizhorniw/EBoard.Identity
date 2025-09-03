@@ -29,7 +29,7 @@ public static class DependencyInjection
     private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<AppDbContext>(opts => opts
-            .UseNpgsql(configuration.GetConnectionString("PostgresUsersDB"))
+            .UseNpgsql(configuration.GetConnectionString("IdentityDB"))
             .UseSnakeCaseNamingConvention());
 
         services.AddScoped<IUsersRepository, UsersRepository>();
@@ -51,7 +51,8 @@ public static class DependencyInjection
                     ClockSkew = TimeSpan.Zero
                 };
             });
-        
+
+        services.AddAuthorization();
         services.AddHttpContextAccessor();
         services.AddScoped<IUserContext, UserContext>();
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
