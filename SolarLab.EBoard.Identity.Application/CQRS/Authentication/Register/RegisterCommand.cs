@@ -1,8 +1,8 @@
 using MediatR;
 
-namespace SolarLab.EBoard.Identity.Application.Users.Register;
+namespace SolarLab.EBoard.Identity.Application.CQRS.Authentication.Register;
 
-public sealed record RegisterUserCommand(
+public sealed record RegisterCommand(
     string Email,
     string? PhoneNumber,
     string FirstName, 

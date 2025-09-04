@@ -1,10 +1,10 @@
 using FluentValidation;
 
-namespace SolarLab.EBoard.Identity.Application.Users.Register;
+namespace SolarLab.EBoard.Identity.Application.CQRS.Authentication.Register;
 
-internal sealed class RegisterUserValidator : AbstractValidator<RegisterUserCommand>
+internal sealed class RegisterValidator : AbstractValidator<RegisterCommand>
 {
-    public RegisterUserValidator()
+    public RegisterValidator()
     {
         RuleFor(c => c.Email).NotEmpty().EmailAddress();
         RuleFor(c => c.FirstName).NotEmpty().MinimumLength(2);
