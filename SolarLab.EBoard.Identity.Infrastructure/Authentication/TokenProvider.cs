@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -17,7 +18,7 @@ public class TokenProvider : ITokenProvider
         _configuration = configuration;
     }
 
-    public string CreateToken(User user)
+    public string CreateAccessToken(User user)
     {
         var secretKey = _configuration["Jwt:Secret"]!;
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
@@ -32,7 +33,7 @@ public class TokenProvider : ITokenProvider
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role)
             ]),
-            Expires = DateTime.UtcNow.AddMinutes(_configuration.GetValue<int>("Jwt:ExpirationInMinutes")),
+            Expires = DateTime.UtcNow.AddMinutes(_configuration.GetValue<int>("Jwt:AccessExpirationMinutes")),
             SigningCredentials = credentials,
             Issuer = _configuration["Jwt:Issuer"],
             Audience = _configuration["Jwt:Audience"]
@@ -42,5 +43,14 @@ public class TokenProvider : ITokenProvider
 
         var token = handler.CreateToken(tokenDescriptor);
         return token;
+    }
+
+    public RefreshToken GenerateRefreshToken(Guid userId)
+    {
+        return new RefreshToken(
+            userId,
+            Convert.ToBase64String(RandomNumberGenerator.GetBytes(128)),
+            DateTime.UtcNow.AddDays(_configuration.GetValue<int>("Jwt:RefreshExpirationDays"))
+            );
     }
 }

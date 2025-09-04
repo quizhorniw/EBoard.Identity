@@ -1,5 +1,5 @@
 using MediatR;
-using SolarLab.EBoard.Identity.Application.Users.GetById;
+using SolarLab.EBoard.Identity.Application.CQRS.Users.GetById;
 
 namespace SolarLab.EBoard.Identity.WebApi.Endpoints.Users;
 
