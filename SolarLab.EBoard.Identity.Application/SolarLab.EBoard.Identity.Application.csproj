@@ -8,7 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MediatR" Version="13.0.0" />
+      <ProjectReference Include="..\SolarLab.EBoard.Identity.Domain\SolarLab.EBoard.Identity.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
     </ItemGroup>
 
 </Project>
