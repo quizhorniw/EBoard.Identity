@@ -1,7 +1,7 @@
 using MediatR;
 using SolarLab.EBoard.Identity.Domain.Interfaces;
 
-namespace SolarLab.EBoard.Identity.Application.Users.GetById;
+namespace SolarLab.EBoard.Identity.Application.CQRS.Users.GetById;
 
 public sealed class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, UserDto?>
 {

@@ -1,7 +1,7 @@
 using MediatR;
 using SolarLab.EBoard.Identity.Domain.Entities;
 
-namespace SolarLab.EBoard.Identity.Application.Users.Register;
+namespace SolarLab.EBoard.Identity.Application.CQRS.Authentication.Register;
 
 internal sealed class UserRegisteredHandler : INotificationHandler<UserRegisteredDomainEvent>
 {

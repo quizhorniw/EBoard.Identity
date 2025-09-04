@@ -1,4 +1,4 @@
-namespace SolarLab.EBoard.Identity.Application.Users;
+namespace SolarLab.EBoard.Identity.Application.CQRS.Users;
 
 public sealed record UserDto(
     Guid Id,
