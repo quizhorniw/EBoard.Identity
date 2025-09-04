@@ -1,9 +1,10 @@
 using MediatR;
-using SolarLab.EBoard.Identity.Application.Users.Register;
+using SolarLab.EBoard.Identity.Application.CQRS.Authentication.Register;
+using SolarLab.EBoard.Identity.WebApi.Endpoints.Users;
 
-namespace SolarLab.EBoard.Identity.WebApi.Endpoints.Users;
+namespace SolarLab.EBoard.Identity.WebApi.Endpoints.Authentication;
 
-public class Register : IEndpoint
+internal sealed class Register : IEndpoint
 {
     internal sealed record Request(
         string Email,
@@ -15,9 +16,9 @@ public class Register : IEndpoint
     
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("/users/register", async (Request request, IMediator mediator, CancellationToken token) =>
+        app.MapPost("/auth/register", async (Request request, IMediator mediator, CancellationToken token) =>
         {
-            var command = new RegisterUserCommand(
+            var command = new RegisterCommand(
                 request.Email,
                 request.PhoneNumber,
                 request.FirstName,

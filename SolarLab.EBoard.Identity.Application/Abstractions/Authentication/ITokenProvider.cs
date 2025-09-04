@@ -4,5 +4,6 @@ namespace SolarLab.EBoard.Identity.Application.Abstractions.Authentication;
 
 public interface ITokenProvider
 {
-    string CreateToken(User user);
+    string CreateAccessToken(User user);
+    RefreshToken GenerateRefreshToken(Guid userId);
 }

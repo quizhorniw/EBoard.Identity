@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolarLab.EBoard.Identity.Domain.Entities;
 
-namespace SolarLab.EBoard.Identity.Infrastructure.Users;
+namespace SolarLab.EBoard.Identity.Infrastructure.Persistence.Configurations;
 
 internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 {
