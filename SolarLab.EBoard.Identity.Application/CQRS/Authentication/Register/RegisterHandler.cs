@@ -1,7 +1,7 @@
 using MediatR;
 using SolarLab.EBoard.Identity.Application.Abstractions.Authentication;
+using SolarLab.EBoard.Identity.Application.Abstractions.Persistence;
 using SolarLab.EBoard.Identity.Domain.Entities;
-using SolarLab.EBoard.Identity.Domain.Interfaces;
 
 namespace SolarLab.EBoard.Identity.Application.CQRS.Authentication.Register;
 

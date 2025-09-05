@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using SolarLab.EBoard.Identity.Application.Abstractions.Persistence;
 using SolarLab.EBoard.Identity.Domain.Entities;
-using SolarLab.EBoard.Identity.Domain.Interfaces;
 
 namespace SolarLab.EBoard.Identity.Infrastructure.Persistence;
 

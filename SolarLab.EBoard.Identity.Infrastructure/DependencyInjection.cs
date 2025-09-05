@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SolarLab.EBoard.Identity.Application.Abstractions.Authentication;
-using SolarLab.EBoard.Identity.Domain.Interfaces;
+using SolarLab.EBoard.Identity.Application.Abstractions.Persistence;
 using SolarLab.EBoard.Identity.Infrastructure.Authentication;
 using SolarLab.EBoard.Identity.Infrastructure.Persistence;
 
