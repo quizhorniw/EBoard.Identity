@@ -50,6 +50,7 @@ public class TokenProvider : ITokenProvider
         return new RefreshToken(
             userId,
             Convert.ToBase64String(RandomNumberGenerator.GetBytes(128)),
+            DateTime.UtcNow,
             DateTime.UtcNow.AddDays(_configuration.GetValue<int>("Jwt:RefreshExpirationDays"))
             );
     }
