@@ -1,7 +1,7 @@
 using SolarLab.EBoard.Identity.Domain.Entities;
 using static Xunit.Assert;
 
-namespace SolarLab.EBoard.Identity.UnitTests.Domain.Entities;
+namespace SolarLab.EBoard.Identity.UnitTests.Domain;
 
 public class RefreshTokenTests
 {
