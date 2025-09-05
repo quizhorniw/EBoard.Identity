@@ -39,6 +39,7 @@ public class UserTests
     [Theory]
     [InlineData(null)]
     [InlineData("")]
+    [InlineData("\r\n")]
     [InlineData("not-an-email")]
     [InlineData("invalid@")]
     public void WhenCreateUser_WithInvalidEmail_ThrowsArgumentException(string email)
@@ -51,6 +52,7 @@ public class UserTests
 
     [Theory]
     [InlineData("")]
+    [InlineData("\r\n")]
     [InlineData("some-letters")]
     [InlineData("12345")]
     [InlineData("+12345")]
@@ -65,6 +67,7 @@ public class UserTests
     [Theory]
     [InlineData(null)]
     [InlineData("")]
+    [InlineData("\r\n")]
     [InlineData("text with whitespaces\r\n")]
     public void WhenCreateUser_WithInvalidFirstName_ThrowsArgumentException(string firstName)
     {
@@ -77,6 +80,7 @@ public class UserTests
     [Theory]
     [InlineData(null)]
     [InlineData("")]
+    [InlineData("\r\n")]
     [InlineData("text with whitespaces\r\n")]
     public void WhenCreateUser_WithInvalidLastName_ThrowsArgumentException(string lastName)
     {
