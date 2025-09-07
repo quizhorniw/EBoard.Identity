@@ -1,5 +1,3 @@
-using SolarLab.EBoard.Identity.Domain.Commons;
-
 namespace SolarLab.EBoard.Identity.Domain.Entities;
 
 public class RefreshToken

@@ -5,7 +5,7 @@ using SolarLab.EBoard.Identity.Domain.Commons;
 
 namespace SolarLab.EBoard.Identity.Application.CQRS.Authentication.Refresh;
 
-internal sealed class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, RefreshTokenResponse>
+public sealed class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, RefreshTokenResponse>
 {
     private readonly IRefreshTokensRepository _refreshTokensRepository;
     private readonly IUsersRepository _usersRepository;

@@ -5,7 +5,7 @@ using SolarLab.EBoard.Identity.Domain.Entities;
 
 namespace SolarLab.EBoard.Identity.Application.CQRS.Authentication.Register;
 
-internal sealed class RegisterHandler : IRequestHandler<RegisterCommand, Guid>
+public sealed class RegisterHandler : IRequestHandler<RegisterCommand, Guid>
 {
     private readonly IUsersRepository _usersRepository;
     private readonly IPasswordHasher _passwordHasher;
