@@ -3,7 +3,7 @@ using SolarLab.EBoard.Identity.Application.Abstractions.Authentication;
 
 namespace SolarLab.EBoard.Identity.Application.CQRS.Authentication.Logout;
 
-public class LogoutHandler : IRequestHandler<LogoutCommand>
+public sealed class LogoutHandler : IRequestHandler<LogoutCommand>
 {
     private readonly ICookieContext _cookieContext;
 

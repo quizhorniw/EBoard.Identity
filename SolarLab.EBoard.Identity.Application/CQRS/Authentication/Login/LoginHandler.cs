@@ -5,7 +5,7 @@ using SolarLab.EBoard.Identity.Application.Abstractions.Persistence;
 
 namespace SolarLab.EBoard.Identity.Application.CQRS.Authentication.Login;
 
-internal sealed class LoginHandler : IRequestHandler<LoginCommand, LoginResponse>
+public sealed class LoginHandler : IRequestHandler<LoginCommand, LoginResponse>
 {
     private readonly IUsersRepository _usersRepository;
     private readonly IPasswordHasher _passwordHasher;

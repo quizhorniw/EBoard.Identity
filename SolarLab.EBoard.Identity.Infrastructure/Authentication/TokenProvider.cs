@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using SolarLab.EBoard.Identity.Application.Abstractions.Authentication;
+using SolarLab.EBoard.Identity.Domain.Commons;
 using SolarLab.EBoard.Identity.Domain.Entities;
 
 namespace SolarLab.EBoard.Identity.Infrastructure.Authentication;
@@ -12,10 +13,12 @@ namespace SolarLab.EBoard.Identity.Infrastructure.Authentication;
 public class TokenProvider : ITokenProvider
 {
     private readonly IConfiguration _configuration;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
-    public TokenProvider(IConfiguration configuration)
+    public TokenProvider(IConfiguration configuration, IDateTimeProvider dateTimeProvider)
     {
         _configuration = configuration;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public string CreateAccessToken(User user)
@@ -33,7 +36,7 @@ public class TokenProvider : ITokenProvider
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role)
             ]),
-            Expires = DateTime.UtcNow.AddMinutes(_configuration.GetValue<int>("Jwt:AccessExpirationMinutes")),
+            Expires = _dateTimeProvider.UtcNow.AddMinutes(_configuration.GetValue<int>("Jwt:AccessExpirationMinutes")),
             SigningCredentials = credentials,
             Issuer = _configuration["Jwt:Issuer"],
             Audience = _configuration["Jwt:Audience"]
@@ -50,7 +53,8 @@ public class TokenProvider : ITokenProvider
         return new RefreshToken(
             userId,
             Convert.ToBase64String(RandomNumberGenerator.GetBytes(128)),
-            DateTime.UtcNow.AddDays(_configuration.GetValue<int>("Jwt:RefreshExpirationDays"))
+            _dateTimeProvider.UtcNow,
+            _dateTimeProvider.UtcNow.AddDays(_configuration.GetValue<int>("Jwt:RefreshExpirationDays"))
             );
     }
 }
