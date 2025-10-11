@@ -1,7 +1,8 @@
 using System.Data.Common;
-using System.Reflection;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,11 +29,27 @@ public class IdentityWebApplicationFactory : WebApplicationFactory<Program>
             {
                 services.Remove(dbConnectionDescriptor);
             }
+            
+            services.AddSingleton<DbConnection>(_ =>
+            {
+                var connection = new SqliteConnection("DataSource=:memory:");
+                connection.Open();
 
-            services.AddDbContext<AppDbContext>(opts => 
-                opts.UseSqlite("DataSource=:memory:"));
+                return connection;
+            });
+
+            services.AddAuthentication("TestScheme")
+                .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("TestScheme", opts => { });
+
+            services.AddDbContext<AppDbContext>((container, options) =>
+            {
+                var connection = container.GetRequiredService<DbConnection>();
+                options.UseSqlite(connection);
+            });
+
+            services.AddHostedService<DatabaseInitializerHostedService>();
         });
 
-        builder.UseEnvironment("Development");
+        builder.UseEnvironment("IntegrationTests");
     }
 }
