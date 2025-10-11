@@ -24,7 +24,6 @@ public sealed class User : Entity
             throw new ArgumentException("Invalid email address.", nameof(email));
         }
 
-        // If phone number present then validate it using regex
         if (phoneNumber != null && !_phoneNumberRegex.IsMatch(phoneNumber))
         {
             throw new ArgumentException("Invalid phone number.", nameof(phoneNumber));
