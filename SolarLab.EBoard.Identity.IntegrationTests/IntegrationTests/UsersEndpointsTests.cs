@@ -29,7 +29,7 @@ public class UsersEndpointsTests : IClassFixture<IdentityWebApplicationFactory>
     }
 
     [Fact]
-    public async Task Get_UserByExistingId_ReturnSuccessAndCorrectContentType()
+    public async Task GetUserById_ExistingId_ReturnSuccessAndCorrectUser()
     {
         // Arrange
         Guid userId;
@@ -67,7 +67,7 @@ public class UsersEndpointsTests : IClassFixture<IdentityWebApplicationFactory>
     }
 
     [Fact]
-    public async Task Get_UserByNonExistingId_ReturnsNullAndNotFound()
+    public async Task GetUserById_NonExistingId_ReturnsNullAndNotFound()
     {
         // Arrange
         var userId = Guid.Parse("9c66c442-1de2-4beb-92f0-bb4eff442b66");
