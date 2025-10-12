@@ -127,7 +127,7 @@ public class AuthenticationEndpointsTests : IClassFixture<IdentityWebApplication
 
         var oldToken = await GetRefreshTokenFromApi(client, "test@mail.com", "1234abcdef");
         client.DefaultRequestHeaders.Add("Cookie", $"refreshToken={oldToken}");
-        
+
         // Act
         var response = await client.PostAsJsonAsync("/api/auth/refresh", new { OldToken = oldToken });
         var result = await response.Content.ReadFromJsonAsync<RefreshTokenResponse>();
@@ -156,7 +156,7 @@ public class AuthenticationEndpointsTests : IClassFixture<IdentityWebApplication
                 return Uri.UnescapeDataString(kv[1]);
             }
         }
-        
+
         return null;
     }
 
@@ -186,7 +186,7 @@ public class AuthenticationEndpointsTests : IClassFixture<IdentityWebApplication
 
         var oldToken = await GetRefreshTokenFromApi(client, "test@mail.com", "1234abcdef");
         // No refresh token cookie
-        
+
         // Act
         var response = await client.PostAsJsonAsync("/api/auth/refresh", new { OldToken = oldToken });
 
@@ -194,5 +194,27 @@ public class AuthenticationEndpointsTests : IClassFixture<IdentityWebApplication
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         await Assert.ThrowsAsync<JsonException>(() =>
             response.Content.ReadFromJsonAsync<RefreshTokenResponse>());
+    }
+
+    [Fact]
+    public async Task Register_Valid_ReturnsUserIdAndSuccess()
+    {
+        // Arrange
+        var client = new IdentityWebApplicationFactory().CreateClient();
+        
+        // Act
+        var response = await client.PostAsJsonAsync("/api/auth/register", new
+        {
+            Email = "test@mail.com",
+            PhoneNumber = "+79180576819",
+            FirstName = "Иван",
+            LastName = "Иванов",
+            Password = "1234abcdef"
+        });
+        var result = await response.Content.ReadFromJsonAsync<Guid>();
+
+        // Assert
+        response.EnsureSuccessStatusCode();
+        Assert.NotNull(result);
     }
 }
