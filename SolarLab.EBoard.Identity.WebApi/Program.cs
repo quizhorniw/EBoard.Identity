@@ -33,3 +33,5 @@ app.UseAuthorization();
 app.UseExceptionHandler();
 
 app.Run();
+
+public partial class Program { }
