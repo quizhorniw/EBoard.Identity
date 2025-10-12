@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarLab.EBoard.Identity.Un
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarLab.EBoard.Identity.IntegrationTests", "SolarLab.EBoard.Identity.IntegrationTests\SolarLab.EBoard.Identity.IntegrationTests.csproj", "{3573D170-68FA-4966-AC50-561AAAAD79A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarLab.EBoard.Identity.ArchitectureTests", "SolarLab.EBoard.Identity.ArchitectureTests\SolarLab.EBoard.Identity.ArchitectureTests.csproj", "{452FE5A4-584C-4A82-9D1B-DB8181574C81}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{3573D170-68FA-4966-AC50-561AAAAD79A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3573D170-68FA-4966-AC50-561AAAAD79A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3573D170-68FA-4966-AC50-561AAAAD79A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{452FE5A4-584C-4A82-9D1B-DB8181574C81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{452FE5A4-584C-4A82-9D1B-DB8181574C81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{452FE5A4-584C-4A82-9D1B-DB8181574C81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{452FE5A4-584C-4A82-9D1B-DB8181574C81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BA4D6E2D-7CAA-4335-87DD-9B17915E4AAC} = {000BB957-D153-49B5-B4E5-5856CE0B4E24}
@@ -54,5 +60,6 @@ Global
 		{D7FDA150-B513-4235-BF69-B1AFF9D0946D} = {000BB957-D153-49B5-B4E5-5856CE0B4E24}
 		{D05A5A7A-7024-48D3-BBC2-E4915EFDB168} = {20DF0E72-6B92-4777-8C03-B51135C39C48}
 		{3573D170-68FA-4966-AC50-561AAAAD79A3} = {20DF0E72-6B92-4777-8C03-B51135C39C48}
+		{452FE5A4-584C-4A82-9D1B-DB8181574C81} = {20DF0E72-6B92-4777-8C03-B51135C39C48}
 	EndGlobalSection
 EndGlobal
