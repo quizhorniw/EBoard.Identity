@@ -34,14 +34,19 @@ public sealed class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, R
             throw new UnauthorizedAccessException();
         }
         
+        var user = await _usersRepository.GetByIdAsync(oldToken.UserId, cancellationToken);
+        if (user == null) 
+        {
+            throw new UnauthorizedAccessException();
+        }
+        
         // Token replacement
         var newToken = _tokenProvider.GenerateRefreshToken(oldToken.UserId);
         oldToken.Revoke(_dateTimeProvider.UtcNow);
         
         await _refreshTokensRepository.AddAsync(newToken, cancellationToken);
         
-        var user = await _usersRepository.GetByIdAsync(oldToken.UserId, cancellationToken);
-        var newAccess = _tokenProvider.CreateAccessToken(user!);
+        var newAccess = _tokenProvider.CreateAccessToken(user);
         
         _cookieContext.AppendRefreshTokenCookie(newToken);
         
