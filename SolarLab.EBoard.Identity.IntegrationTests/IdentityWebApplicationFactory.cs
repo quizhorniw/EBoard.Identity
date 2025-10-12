@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using SolarLab.EBoard.Identity.Infrastructure.Persistence;
+using SolarLab.EBoard.Identity.IntegrationTests.Helpers;
 
 namespace SolarLab.EBoard.Identity.IntegrationTests;
 
@@ -16,19 +16,7 @@ public class IdentityWebApplicationFactory : WebApplicationFactory<Program>
     {
         builder.ConfigureServices(services =>
         {
-            var dbContextDescriptor = services.SingleOrDefault(d => 
-                d.ServiceType == typeof(IDbContextOptionsConfiguration<AppDbContext>));
-            if (dbContextDescriptor is not null)
-            {
-                services.Remove(dbContextDescriptor);
-            }
-
-            var dbConnectionDescriptor = services.SingleOrDefault(d => 
-                d.ServiceType == typeof(DbConnection));
-            if (dbConnectionDescriptor is not null)
-            {
-                services.Remove(dbConnectionDescriptor);
-            }
+            WebApplicationFactoryHelper.RemoveDbContext<AppDbContext>(services);
             
             services.AddSingleton<DbConnection>(_ =>
             {
