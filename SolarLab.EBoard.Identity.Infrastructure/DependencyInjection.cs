@@ -8,6 +8,7 @@ using SolarLab.EBoard.Identity.Application.Abstractions.Authentication;
 using SolarLab.EBoard.Identity.Application.Abstractions.Persistence;
 using SolarLab.EBoard.Identity.Domain.Commons;
 using SolarLab.EBoard.Identity.Infrastructure.Authentication;
+using SolarLab.EBoard.Identity.Infrastructure.ExceptionHandlers;
 using SolarLab.EBoard.Identity.Infrastructure.Persistence;
 using SolarLab.EBoard.Identity.Infrastructure.Time;
 
@@ -26,6 +27,10 @@ public static class DependencyInjection
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+        services.AddExceptionHandler<BadRequestExceptionHandler>();
+        services.AddExceptionHandler<GlobalExceptionHandler>();
+        services.AddProblemDetails();
         
         return services;
     }
