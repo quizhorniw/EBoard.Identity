@@ -1,6 +1,6 @@
 using SolarLab.EBoard.Identity.Domain.Entities;
 
-namespace SolarLab.EBoard.Identity.Domain.Interfaces;
+namespace SolarLab.EBoard.Identity.Application.Abstractions.Persistence;
 
 public interface IUsersRepository
 {

@@ -1,11 +1,11 @@
 using MediatR;
 using SolarLab.EBoard.Identity.Application.Abstractions.Authentication;
+using SolarLab.EBoard.Identity.Application.Abstractions.Persistence;
 using SolarLab.EBoard.Identity.Domain.Entities;
-using SolarLab.EBoard.Identity.Domain.Interfaces;
 
 namespace SolarLab.EBoard.Identity.Application.CQRS.Authentication.Register;
 
-internal sealed class RegisterHandler : IRequestHandler<RegisterCommand, Guid>
+public sealed class RegisterHandler : IRequestHandler<RegisterCommand, Guid>
 {
     private readonly IUsersRepository _usersRepository;
     private readonly IPasswordHasher _passwordHasher;

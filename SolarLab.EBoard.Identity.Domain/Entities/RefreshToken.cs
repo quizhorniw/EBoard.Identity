@@ -2,34 +2,34 @@ namespace SolarLab.EBoard.Identity.Domain.Entities;
 
 public class RefreshToken
 {
-    public Guid Id { get; set; }
-    public Guid UserId { get; set; }
-    public string Token { get; set; }
-    public DateTime Expires { get; set; }
-    public DateTime Created { get; set; }
-    public DateTime? Revoked { get; set; }
+    public Guid Id { get; }
+    public Guid UserId { get; private set; }
+    public string Token { get; private set; }
+    public DateTime CreatedAt { get; private set; }
+    public DateTime ExpiresAt { get; private set; }
+    public DateTime? Revoked { get; private set; }
 
-    public RefreshToken(Guid userId, string token, DateTime expires)
+    public RefreshToken(Guid userId, string token, DateTime createdAt, DateTime expiresAt)
     {
         if (string.IsNullOrWhiteSpace(token))
         {
             throw new ArgumentException("Invalid refresh token", nameof(token));
         }
 
-        if (DateTime.UtcNow >= expires)
+        if (createdAt >= expiresAt)
         {
-            throw new ArgumentException("Invalid expiration date and time", nameof(expires));
+            throw new ArgumentException("Invalid expiration date and time", nameof(expiresAt));
         }
         
         Id = Guid.NewGuid();
         UserId = userId;
         Token = token;
-        Expires = expires;
-        Created = DateTime.UtcNow;
+        ExpiresAt = expiresAt;
+        CreatedAt = createdAt;
         Revoked = null;
     }
     
-    public bool IsActive() => Revoked == null && Expires > DateTime.UtcNow;
+    public bool IsActive(DateTime isActiveAt) => Revoked == null && ExpiresAt > isActiveAt;
     
-    public void Revoke() => Revoked = DateTime.UtcNow;
+    public void Revoke(DateTime revokedAt) => Revoked = revokedAt;
 }

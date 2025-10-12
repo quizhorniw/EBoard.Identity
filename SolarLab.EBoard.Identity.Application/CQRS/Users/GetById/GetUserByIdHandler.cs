@@ -1,5 +1,5 @@
 using MediatR;
-using SolarLab.EBoard.Identity.Domain.Interfaces;
+using SolarLab.EBoard.Identity.Application.Abstractions.Persistence;
 
 namespace SolarLab.EBoard.Identity.Application.CQRS.Users.GetById;
 

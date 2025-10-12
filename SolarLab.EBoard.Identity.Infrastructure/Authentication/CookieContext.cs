@@ -20,7 +20,7 @@ public class CookieContext : ICookieContext
                 HttpOnly = true,
                 Secure = true,
                 SameSite = SameSiteMode.Strict,
-                Expires = refreshToken.Expires
+                Expires = refreshToken.ExpiresAt
             });
     }
 

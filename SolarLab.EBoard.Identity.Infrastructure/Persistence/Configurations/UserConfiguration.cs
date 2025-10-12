@@ -16,7 +16,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.FirstName).IsRequired().HasMaxLength(100);
         builder.Property(u => u.LastName).IsRequired().HasMaxLength(100);
         builder.Property(u => u.PasswordHash).IsRequired();
-        builder.Property(u => u.Role).IsRequired();
+        builder.Property(u => u.Role).IsRequired().HasDefaultValue("User");
 
         builder.ToTable(t => t.HasCheckConstraint("CK_User_Role", "role IN ('Admin','User')"));
     }

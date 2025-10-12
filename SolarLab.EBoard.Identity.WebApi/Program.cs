@@ -30,4 +30,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseExceptionHandler();
+
 app.Run();
+
+public partial class Program { }
