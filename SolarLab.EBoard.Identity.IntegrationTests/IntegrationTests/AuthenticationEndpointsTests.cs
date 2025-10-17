@@ -10,7 +10,7 @@ using Xunit.Abstractions;
 
 namespace SolarLab.EBoard.Identity.IntegrationTests.IntegrationTests;
 
-public class AuthenticationEndpointsTests : IClassFixture<IdentityWebApplicationFactory>
+public class AuthenticationEndpointsTests
 {
     private readonly ITestOutputHelper _testOutputHelper;
 
@@ -216,5 +216,35 @@ public class AuthenticationEndpointsTests : IClassFixture<IdentityWebApplication
         // Assert
         response.EnsureSuccessStatusCode();
         Assert.NotNull(result);
+    }
+
+    [Fact]
+    public async Task ConfirmEmail_ReturnsSuccess()
+    {
+        // Arrange
+        var factory = new IdentityWebApplicationFactory();
+        var client = factory.CreateClient();
+
+        Guid? userId;
+        string? confirmationToken;
+        using (var scope = factory.Services.CreateScope())
+        {
+            var scopedServices = scope.ServiceProvider;
+            var context = scopedServices.GetRequiredService<AppDbContext>();
+
+            var user = new User("test@mail.com", "+71234567890", "FirstName", "LastName", "hash");
+            userId = user.Id;
+            
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
+
+            confirmationToken = user.ConfirmationToken;
+        }
+        
+        // Act
+        var response = await client.GetAsync($"/api/auth/confirmEmail?userId={userId}&token={confirmationToken}");
+        
+        // Assert
+        response.EnsureSuccessStatusCode();
     }
 }
