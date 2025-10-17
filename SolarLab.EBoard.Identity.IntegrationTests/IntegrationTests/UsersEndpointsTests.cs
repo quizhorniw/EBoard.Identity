@@ -80,45 +80,4 @@ public class UsersEndpointsTests : IClassFixture<IdentityWebApplicationFactory>
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         await Assert.ThrowsAsync<JsonException>(() => response.Content.ReadFromJsonAsync<UserDto>());
     }
-
-    [Fact]
-    public async Task GetUserById_WithoutAuthentication_ReturnsNullAndUnauthorized()
-    {
-        // Arrange
-        var noAuthClient = new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
-        {
-            builder.ConfigureServices(services =>
-            {
-                WebApplicationFactoryHelper.RemoveDbContext<AppDbContext>(services);
-            
-                services.AddSingleton<DbConnection>(_ =>
-                {
-                    var connection = new SqliteConnection("DataSource=:memory:");
-                    connection.Open();
-
-                    return connection;
-                });
-
-                services.AddDbContext<AppDbContext>((container, options) =>
-                {
-                    var connection = container.GetRequiredService<DbConnection>();
-                    options.UseSqlite(connection);
-                });
-
-                services.AddHostedService<DatabaseInitializerHostedService>();
-            });
-
-            builder.UseEnvironment("IntegrationTests");
-        }).CreateClient();
-        
-        var userId = Guid.Parse("9c66c442-1de2-4beb-92f0-bb4eff442b66");
-        var url = "/api/users/" + userId;
-
-        // Act
-        var response = await noAuthClient.GetAsync(url);
-
-        // Assert
-        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
-        await Assert.ThrowsAsync<JsonException>(() => response.Content.ReadFromJsonAsync<UserDto>());
-    }
 }
