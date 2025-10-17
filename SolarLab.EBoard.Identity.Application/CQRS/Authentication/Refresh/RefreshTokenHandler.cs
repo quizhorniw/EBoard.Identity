@@ -1,7 +1,7 @@
 using MediatR;
 using SolarLab.EBoard.Identity.Application.Abstractions.Authentication;
 using SolarLab.EBoard.Identity.Application.Abstractions.Persistence;
-using SolarLab.EBoard.Identity.Domain.Commons;
+using SolarLab.EBoard.Identity.Application.Abstractions.Time;
 
 namespace SolarLab.EBoard.Identity.Application.CQRS.Authentication.Refresh;
 

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using SolarLab.EBoard.Identity.Application.Abstractions.Authentication;
-using SolarLab.EBoard.Identity.Domain.Commons;
+using SolarLab.EBoard.Identity.Application.Abstractions.Time;
 using SolarLab.EBoard.Identity.Domain.Entities;
 
 namespace SolarLab.EBoard.Identity.Infrastructure.Authentication;

@@ -1,8 +1,8 @@
 using Moq;
 using SolarLab.EBoard.Identity.Application.Abstractions.Authentication;
 using SolarLab.EBoard.Identity.Application.Abstractions.Persistence;
+using SolarLab.EBoard.Identity.Application.Abstractions.Time;
 using SolarLab.EBoard.Identity.Application.CQRS.Authentication.Refresh;
-using SolarLab.EBoard.Identity.Domain.Commons;
 using SolarLab.EBoard.Identity.Domain.Entities;
 using static Xunit.Assert;
 

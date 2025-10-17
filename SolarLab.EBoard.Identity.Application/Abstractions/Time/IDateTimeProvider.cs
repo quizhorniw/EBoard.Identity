@@ -1,4 +1,4 @@
-namespace SolarLab.EBoard.Identity.Domain.Commons;
+namespace SolarLab.EBoard.Identity.Application.Abstractions.Time;
 
 public interface IDateTimeProvider
 {
