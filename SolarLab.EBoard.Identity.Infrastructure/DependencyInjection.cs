@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using SolarLab.EBoard.Identity.Application.Abstractions.Authentication;
 using SolarLab.EBoard.Identity.Application.Abstractions.Messaging;
 using SolarLab.EBoard.Identity.Application.Abstractions.Persistence;
-using SolarLab.EBoard.Identity.Domain.Commons;
+using SolarLab.EBoard.Identity.Application.Abstractions.Time;
 using SolarLab.EBoard.Identity.Infrastructure.Authentication;
 using SolarLab.EBoard.Identity.Infrastructure.ExceptionHandlers;
 using SolarLab.EBoard.Identity.Infrastructure.Messaging;

@@ -1,4 +1,4 @@
-using SolarLab.EBoard.Identity.Domain.Commons;
+using SolarLab.EBoard.Identity.Application.Abstractions.Time;
 
 namespace SolarLab.EBoard.Identity.UnitTests.Application.Authentication;
 
