@@ -15,6 +15,6 @@ internal sealed class GetById : IEndpoint
             return result is not null ? Results.Ok(result) : Results.NotFound();
         })
             .WithName(EndpointName)
-            .RequireAuthorization();
+            .AllowAnonymous();
     }
 }
