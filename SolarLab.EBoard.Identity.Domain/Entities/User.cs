@@ -16,6 +16,8 @@ public sealed class User : Entity
     public string LastName { get; private set; }
     public string PasswordHash { get; private set; }
     public string Role { get; private set; }
+    public string? ConfirmationToken { get; private set; }
+    public bool IsConfirmed { get; private set; }
 
     public User(string email, string? phoneNumber, string firstName, string lastName, string passwordHash)
     {
@@ -46,7 +48,15 @@ public sealed class User : Entity
         LastName = lastName;
         PasswordHash = passwordHash;
         Role = "User";
+        IsConfirmed = false;
         
         Raise(new UserRegisteredDomainEvent(Id));
     }
+
+    public void SetConfirmationToken(string confirmationToken)
+    {
+        ConfirmationToken = confirmationToken;
+    }
+
+    public void ConfirmEmail() => IsConfirmed = true;
 }
