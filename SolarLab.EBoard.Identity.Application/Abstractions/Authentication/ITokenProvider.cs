@@ -6,4 +6,5 @@ public interface ITokenProvider
 {
     string CreateAccessToken(User user);
     RefreshToken GenerateRefreshToken(Guid userId);
+    string GenerateEmailConfirmationToken();
 }
