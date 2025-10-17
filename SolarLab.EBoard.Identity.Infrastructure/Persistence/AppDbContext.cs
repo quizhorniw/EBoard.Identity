@@ -28,12 +28,12 @@ public class AppDbContext : DbContext
     {
         var result = await base.SaveChangesAsync(cancellationToken);
 
-        await PublishDomainEventsAsync();
+        await PublishDomainEventsAsync(cancellationToken);
 
         return result;
     }
 
-    private async Task PublishDomainEventsAsync()
+    private async Task PublishDomainEventsAsync(CancellationToken cancellationToken)
     {
         var domainEvents = ChangeTracker
             .Entries<Entity>()
@@ -50,7 +50,7 @@ public class AppDbContext : DbContext
 
         foreach (var domainEvent in domainEvents)
         {
-            await _publisher.Publish(domainEvent);
+            await _publisher.Publish(domainEvent, cancellationToken);
         }
     }
 }

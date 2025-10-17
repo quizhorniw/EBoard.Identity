@@ -60,6 +60,6 @@ public class TokenProvider : ITokenProvider
 
     public string GenerateEmailConfirmationToken()
     {
-        return Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
+        return Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)).Replace("+", "");
     }
 }

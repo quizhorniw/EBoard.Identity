@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using SolarLab.EBoard.Identity.Application.Abstractions.Messaging;
 using SolarLab.EBoard.Identity.Infrastructure.Persistence;
 using SolarLab.EBoard.Identity.IntegrationTests.Helpers;
 
@@ -36,8 +38,12 @@ public class IdentityWebApplicationFactory : WebApplicationFactory<Program>
             });
 
             services.AddHostedService<DatabaseInitializerHostedService>();
+            
+            services.AddSingleton<IMessageProducer, NoOpMessageProducer>();
         });
 
+        builder.ConfigureLogging(l => l.AddConsole().SetMinimumLevel(LogLevel.Debug));
+        
         builder.UseEnvironment("IntegrationTests");
     }
 }
