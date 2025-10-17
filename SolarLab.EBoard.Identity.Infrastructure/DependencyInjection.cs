@@ -1,14 +1,18 @@
+using System.Net;
 using System.Text;
+using Confluent.Kafka;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SolarLab.EBoard.Identity.Application.Abstractions.Authentication;
+using SolarLab.EBoard.Identity.Application.Abstractions.Messaging;
 using SolarLab.EBoard.Identity.Application.Abstractions.Persistence;
 using SolarLab.EBoard.Identity.Domain.Commons;
 using SolarLab.EBoard.Identity.Infrastructure.Authentication;
 using SolarLab.EBoard.Identity.Infrastructure.ExceptionHandlers;
+using SolarLab.EBoard.Identity.Infrastructure.Messaging;
 using SolarLab.EBoard.Identity.Infrastructure.Persistence;
 using SolarLab.EBoard.Identity.Infrastructure.Time;
 
@@ -20,6 +24,7 @@ public static class DependencyInjection
     {
         return services
             .AddServices()
+            .AddKafka()
             .AddDatabase(configuration)
             .AddAuthenticationInternal(configuration);
     }
@@ -27,11 +32,25 @@ public static class DependencyInjection
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
-
+        
         services.AddExceptionHandler<BadRequestExceptionHandler>();
         services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddProblemDetails();
         
+        return services;
+    }
+
+    private static IServiceCollection AddKafka(this IServiceCollection services)
+    {
+        var kafkaConfig = new ProducerConfig
+        {
+            BootstrapServers = "localhost:9092",
+            ClientId = Dns.GetHostName(),
+        };
+        services.AddSingleton<IProducer<string, string>>(_ => new ProducerBuilder<string, string>(kafkaConfig).Build());
+        
+        services.AddSingleton<IMessageProducer, KafkaNotificationProducer>();
+
         return services;
     }
     

@@ -57,4 +57,9 @@ public class TokenProvider : ITokenProvider
             _dateTimeProvider.UtcNow.AddDays(_configuration.GetValue<int>("Jwt:RefreshExpirationDays"))
             );
     }
+
+    public string GenerateEmailConfirmationToken()
+    {
+        return Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)).Replace("+", "");
+    }
 }
