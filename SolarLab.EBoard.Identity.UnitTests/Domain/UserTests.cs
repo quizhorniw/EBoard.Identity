@@ -89,4 +89,33 @@ public class UserTests
         Throws<ArgumentException>(() => 
             new User("test@mail.com", "+79180576819", "Иван", lastName, "hash"));
     }
+
+    [Theory]
+    [InlineData("confirmation token")]
+    [InlineData("SoMe Token 2")]
+    [InlineData("3-4-5-6-7-8")]
+    public void SetEmailConfirmationToken_SetsEmailConfirmationToken(string confirmationToken)
+    {
+        // Arrange
+        var user = new User("test@mail.com", "+79180576819", "Иван", "Иванов", "hash");
+        
+        // Act
+        user.SetConfirmationToken(confirmationToken);
+        
+        // Assert
+        Equal(confirmationToken, user.ConfirmationToken);
+    }
+
+    [Fact]
+    public void ConfirmEmail_ConfirmsEmail()
+    {
+        // Arrange
+        var user = new User("test@mail.com", "+79180576819", "Иван", "Иванов", "hash");
+        
+        // Act
+        user.ConfirmEmail();
+        
+        // Assert
+        True(user.IsConfirmed);
+    }
 }
