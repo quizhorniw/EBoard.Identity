@@ -1,16 +1,11 @@
-using System.Data.Common;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SolarLab.EBoard.Identity.Application.CQRS.Users;
 using SolarLab.EBoard.Identity.Domain.Entities;
 using SolarLab.EBoard.Identity.Infrastructure.Persistence;
-using SolarLab.EBoard.Identity.IntegrationTests.Helpers;
 
 namespace SolarLab.EBoard.Identity.IntegrationTests.IntegrationTests;
 

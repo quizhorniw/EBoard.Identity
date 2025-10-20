@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddApplication()
-    .AddInfrastructure(builder.Configuration);
+    .AddInfrastructure();
 
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
@@ -34,4 +34,4 @@ app.UseExceptionHandler();
 
 app.Run();
 
-public partial class Program { }
+public partial class Program;

@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using SolarLab.EBoard.Identity.Application.Abstractions.Authentication;
@@ -12,19 +11,17 @@ namespace SolarLab.EBoard.Identity.Infrastructure.Authentication;
 
 public class TokenProvider : ITokenProvider
 {
-    private readonly IConfiguration _configuration;
     private readonly IDateTimeProvider _dateTimeProvider;
 
-    public TokenProvider(IConfiguration configuration, IDateTimeProvider dateTimeProvider)
+    public TokenProvider(IDateTimeProvider dateTimeProvider)
     {
-        _configuration = configuration;
         _dateTimeProvider = dateTimeProvider;
     }
 
     public string CreateAccessToken(User user)
     {
-        var secretKey = _configuration["Jwt:Secret"]!;
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+            Environment.GetEnvironmentVariable("JWT_SECRET")!));
 
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
@@ -36,10 +33,11 @@ public class TokenProvider : ITokenProvider
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role)
             ]),
-            Expires = _dateTimeProvider.UtcNow.AddMinutes(_configuration.GetValue<int>("Jwt:AccessExpirationMinutes")),
+            Expires = _dateTimeProvider.UtcNow.AddMinutes(int.Parse(
+                Environment.GetEnvironmentVariable("JWT_ACCESS_EXPIRATION_MINUTES")!)),
             SigningCredentials = credentials,
-            Issuer = _configuration["Jwt:Issuer"],
-            Audience = _configuration["Jwt:Audience"]
+            Issuer = Environment.GetEnvironmentVariable("JWT_ISSUER"),
+            Audience = Environment.GetEnvironmentVariable("JWT_AUDIENCE")
         };
 
         var handler = new JsonWebTokenHandler();
@@ -54,8 +52,8 @@ public class TokenProvider : ITokenProvider
             userId,
             Convert.ToBase64String(RandomNumberGenerator.GetBytes(128)),
             _dateTimeProvider.UtcNow,
-            _dateTimeProvider.UtcNow.AddDays(_configuration.GetValue<int>("Jwt:RefreshExpirationDays"))
-            );
+            _dateTimeProvider.UtcNow.AddDays(int.Parse(
+                Environment.GetEnvironmentVariable("JWT_REFRESH_EXPIRATION_DAYS")!)));
     }
 
     public string GenerateEmailConfirmationToken()

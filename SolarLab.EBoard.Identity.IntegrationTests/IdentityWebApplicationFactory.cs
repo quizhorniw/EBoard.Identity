@@ -40,6 +40,13 @@ public class IdentityWebApplicationFactory : WebApplicationFactory<Program>
             services.AddHostedService<DatabaseInitializerHostedService>();
             
             services.AddSingleton<IMessageProducer, NoOpMessageProducer>();
+            
+            Environment.SetEnvironmentVariable("JWT_SECRET", "Test JWT Secret-long-long-very-long-secret");
+            Environment.SetEnvironmentVariable("JWT_ISSUER", "Test JWT Issuer");
+            Environment.SetEnvironmentVariable("JWT_AUDIENCE", "Test JWT Audience");
+            Environment.SetEnvironmentVariable("JWT_ACCESS_EXPIRATION_MINUTES", "10");
+            Environment.SetEnvironmentVariable("JWT_REFRESH_EXPIRATION_DAYS", "5");
+            Environment.SetEnvironmentVariable("BASE_URL", "Test Base URL");
         });
 
         builder.ConfigureLogging(l => l.AddConsole().SetMinimumLevel(LogLevel.Debug));

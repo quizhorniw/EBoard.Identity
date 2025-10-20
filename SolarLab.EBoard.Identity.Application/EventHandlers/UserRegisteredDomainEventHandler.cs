@@ -33,7 +33,8 @@ public class UserRegisteredDomainEventHandler : INotificationHandler<UserRegiste
         user.SetConfirmationToken(token);
         await _usersRepository.UpdateAsync(user, cancellationToken);
         
-        var confirmationUrl = $"http://localhost:5279/api/auth/confirmEmail?userId={user.Id}&token={token}";
+        var confirmationUrl = $"{Environment.GetEnvironmentVariable("BASE_URL")}/api/auth/confirmEmail" +
+                              $"?userId={user.Id}&token={token}";
         
         var message = new
         {
