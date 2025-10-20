@@ -3,7 +3,6 @@ using System.Text;
 using Confluent.Kafka;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SolarLab.EBoard.Identity.Application.Abstractions.Authentication;
@@ -20,13 +19,13 @@ namespace SolarLab.EBoard.Identity.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         return services
             .AddServices()
             .AddKafka()
-            .AddDatabase(configuration)
-            .AddAuthenticationInternal(configuration);
+            .AddDatabase()
+            .AddAuthenticationInternal();
     }
 
     private static IServiceCollection AddServices(this IServiceCollection services)
@@ -44,7 +43,7 @@ public static class DependencyInjection
     {
         var kafkaConfig = new ProducerConfig
         {
-            BootstrapServers = "localhost:9092",
+            BootstrapServers = Environment.GetEnvironmentVariable("KAFKA_BOOTSTRAP_SERVER"),
             ClientId = Dns.GetHostName(),
         };
         services.AddSingleton<IProducer<string, string>>(_ => new ProducerBuilder<string, string>(kafkaConfig).Build());
@@ -54,10 +53,10 @@ public static class DependencyInjection
         return services;
     }
     
-    private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddDatabase(this IServiceCollection services)
     {
         services.AddDbContext<AppDbContext>(opts => opts
-            .UseNpgsql(configuration.GetConnectionString("IdentityDB"))
+            .UseNpgsql(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING"))
             .UseSnakeCaseNamingConvention());
 
         services.AddScoped<IUsersRepository, UsersRepository>();
@@ -66,7 +65,7 @@ public static class DependencyInjection
         return services;
     }
 
-    private static IServiceCollection AddAuthenticationInternal(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddAuthenticationInternal(this IServiceCollection services)
     {
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(o =>
@@ -74,9 +73,10 @@ public static class DependencyInjection
                 o.RequireHttpsMetadata = false;
                 o.TokenValidationParameters = new TokenValidationParameters
                 {
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Secret"]!)),
-                    ValidIssuer = configuration["Jwt:Issuer"],
-                    ValidAudience = configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                        Environment.GetEnvironmentVariable("JWT_SECRET")!)),
+                    ValidIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER"),
+                    ValidAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE"),
                     ClockSkew = TimeSpan.Zero
                 };
             });
