@@ -5,7 +5,7 @@ namespace SolarLab.EBoard.Identity.WebApi.Endpoints.Authentication;
 
 internal sealed class Login : IEndpoint
 {
-    internal sealed record Request(string Email, string Password);
+    internal sealed record LoginRequest(string Email, string Password);
     
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

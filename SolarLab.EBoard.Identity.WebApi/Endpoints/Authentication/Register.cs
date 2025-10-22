@@ -6,7 +6,7 @@ namespace SolarLab.EBoard.Identity.WebApi.Endpoints.Authentication;
 
 internal sealed class Register : IEndpoint
 {
-    internal sealed record Request(
+    internal sealed record RegisterRequest(
         string Email,
         string? PhoneNumber,
         string FirstName, 
