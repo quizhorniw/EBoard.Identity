@@ -13,6 +13,7 @@ builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
+builder.Services.ConfigureSwaggerGen();
 
 var app = builder.Build();
 
@@ -23,6 +24,9 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MigrateDb();
+
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
