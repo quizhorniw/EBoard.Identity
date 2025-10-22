@@ -7,12 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddApplication()
-    .AddInfrastructure(builder.Configuration);
+    .AddInfrastructure();
 
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
+builder.Services.ConfigureSwaggerGen();
 
 var app = builder.Build();
 
@@ -23,6 +24,9 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MigrateDb();
+
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
@@ -34,4 +38,4 @@ app.UseExceptionHandler();
 
 app.Run();
 
-public partial class Program { }
+public partial class Program;
